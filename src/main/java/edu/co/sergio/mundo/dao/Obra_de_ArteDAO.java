@@ -34,7 +34,7 @@ public class Obra_de_ArteDAO implements IBaseDatos<Obra_de_Arte> {
 	 */
 	public List<Obra_de_Arte> findAll() {
 		List<Obra_de_Arte> departamentos= null;
-	    String query = "SELECT * FROM Depto";
+	    String query = "SELECT * FROM Obra_de_Arte";
 	    Connection connection = null;
             try {
                 connection = Conexion.getConnection();
@@ -44,8 +44,10 @@ public class Obra_de_ArteDAO implements IBaseDatos<Obra_de_Arte> {
 	    try {
 	    Statement st = connection.createStatement();
 	    ResultSet rs = st.executeQuery(query);
-	    int id =0;
+	    int valor =0;
 	    String nombre = null;
+            String descripcion = null;
+            String estilo = null;
 	
 	    while (rs.next()){
 	    	if(departamentos == null){
@@ -53,12 +55,15 @@ public class Obra_de_ArteDAO implements IBaseDatos<Obra_de_Arte> {
 	    	}
 	      
 	        Obra_de_Arte registro= new Obra_de_Arte();
-	        id = rs.getInt("id_depto");
-	        registro.setValor(id);
 	        
-	        nombre = rs.getString("nom_depto");
+	        nombre = rs.getString("nombre");
 	        registro.setNombre(nombre) ;
-	        
+	        descripcion = rs.getString("descripcion");
+	        registro.setDescripcion(descripcion) ;
+                estilo = rs.getString("estilo");
+	        registro.setEstilo(estilo) ;
+                valor = rs.getInt("valor");
+	        registro.setValor(valor);
 	        departamentos.add(registro);
 	    }
 	    st.close();
@@ -85,7 +90,7 @@ public class Obra_de_ArteDAO implements IBaseDatos<Obra_de_Arte> {
             } catch (URISyntaxException ex) {
                 Logger.getLogger(Obra_de_ArteDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-	    String query = " insert into Depto (id_depto,nom_depto)"  + " values (?,?)";
+	    String query = " insert into Obra_de_Arte(id_depto,nom_depto)"  + " values (?,?)";
         PreparedStatement preparedStmt=null;
 	    try {
 			preparedStmt = connection.prepareStatement(query);
@@ -111,7 +116,7 @@ public class Obra_de_ArteDAO implements IBaseDatos<Obra_de_Arte> {
             } catch (URISyntaxException ex) {
                 Logger.getLogger(Obra_de_ArteDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-		String query = "update Depto set nom_depto = ? where id_depto = ?";
+		String query = "update Obra_de_Arte set nom_depto = ? where id_depto = ?";
 		PreparedStatement preparedStmt=null;
 		try {
 		    preparedStmt = connection.prepareStatement(query);
@@ -141,7 +146,7 @@ public class Obra_de_ArteDAO implements IBaseDatos<Obra_de_Arte> {
             } catch (URISyntaxException ex) {
                 Logger.getLogger(Obra_de_ArteDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-	   String query = "delete from Depto where id_depto = ?";
+	   String query = "delete from Obra_de_Arte where id_depto = ?";
 	   PreparedStatement preparedStmt=null;
 	   try {
 		     preparedStmt = connection.prepareStatement(query);
