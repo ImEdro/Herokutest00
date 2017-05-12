@@ -64,6 +64,7 @@ public class Obra_de_ArteDAO implements IBaseDatos<Obra_de_Arte> {
 	        registro.setEstilo(estilo) ;
                 valor = rs.getInt("valor");
 	        registro.setValor(valor);
+                
 	        departamentos.add(registro);
 	    }
 	    st.close();
@@ -90,12 +91,14 @@ public class Obra_de_ArteDAO implements IBaseDatos<Obra_de_Arte> {
             } catch (URISyntaxException ex) {
                 Logger.getLogger(Obra_de_ArteDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-	    String query = " insert into Obra_de_Arte(id_depto,nom_depto)"  + " values (?,?)";
+	    String query = " insert into Obra_de_Arte(nombre,descripcion,estilo,valor)"  + " values (?,?,?,?)";
         PreparedStatement preparedStmt=null;
 	    try {
 			preparedStmt = connection.prepareStatement(query);
-			preparedStmt.setInt (1, t.getValor());
-                        preparedStmt.setString (2, t.getNombre());
+			preparedStmt.setString (1, t.getNombre());
+                        preparedStmt.setString (2, t.getDescripcion());
+                        preparedStmt.setString (3, t.getEstilo());
+                        preparedStmt.setInt (4, t.getValor());
 			result= preparedStmt.execute();
 	    } catch (SQLException e) {
 			e.printStackTrace();
